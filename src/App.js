@@ -1,23 +1,32 @@
 import logo from './logo.svg';
 import './App.css';
+import Modules from './pages/Modules';
+import Timetable from './pages/Timetable';
+import Reminder from './pages/Reminder';
+import BasicTabs from './components/TabPanel'
+import PersistentDrawerLeft from './pages/LeftDrawer';
+
+const children=[
+  {
+    name:'Modules',
+    content:<Modules />
+  },
+  {
+    name:'Reminder',
+    content:<Reminder />
+  },
+  {
+    name:'Timetable',
+    content:<Timetable />
+  },
+]
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <PersistentDrawerLeft>
+        <BasicTabs children={children}/>
+      </PersistentDrawerLeft>
     </div>
   );
 }
