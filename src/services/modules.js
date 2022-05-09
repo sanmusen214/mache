@@ -1,3 +1,19 @@
+/**
+ * id,name,link,describe
+ */
+function formatModules(obj){
+    if(!obj.id){
+        throw Error("must have an id")
+    }
+    return {
+        id:obj.id,
+        name:obj.name||obj.id,
+        link:obj.link||"#",
+        describe:obj.describe||""
+    }
+}
+
+
 export function getmodules(){
     return [
         {

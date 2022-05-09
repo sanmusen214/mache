@@ -1,3 +1,6 @@
+/**
+ * name,link,picurl
+ */
 const online=[
     {
         name:'Email',
