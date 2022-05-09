@@ -17,6 +17,8 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
+import { getdrawer } from '../services/leftdrawer';
+import { Link } from '@mui/material';
 
 const drawerWidth = 240;
 
@@ -116,23 +118,28 @@ export default function PersistentDrawerLeft(props) {
         </DrawerHeader>
         <Divider />
         <List>
-          {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-            <ListItem button key={text}>
+          {getdrawer()['online'].map((each, index) => (
+            <ListItem 
+            button key={each.name}
+            onClick={()=>{each.link&&window.open(each.link)}}
+            >
               <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                <img src={each.picurl} width={30} />
               </ListItemIcon>
-              <ListItemText primary={text} />
+              <ListItemText primary={each.name} />
             </ListItem>
           ))}
         </List>
         <Divider />
         <List>
-          {['All mail', 'Trash', 'Spam'].map((text, index) => (
-            <ListItem button key={text}>
+          {getdrawer()['onsite'].map((each, index) => (
+            <ListItem button 
+            onClick={()=>{each.link&&window.open(each.link)}}
+            key={each.name}>
               <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                <img src={each.picurl} width={30} />
               </ListItemIcon>
-              <ListItemText primary={text} />
+              <ListItemText primary={each.name} />
             </ListItem>
           ))}
         </List>

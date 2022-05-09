@@ -1,10 +1,12 @@
+import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 import Modules from './pages/Modules';
-import Timetable from './pages/Timetable';
+import Timeline from './pages/Timeline';
 import Reminder from './pages/Reminder';
 import BasicTabs from './components/TabPanel'
 import PersistentDrawerLeft from './pages/LeftDrawer';
+
 
 const children=[
   {
@@ -16,16 +18,20 @@ const children=[
     content:<Reminder />
   },
   {
-    name:'Timetable',
-    content:<Timetable />
+    name:'Timeline',
+    content:<Timeline />
   },
 ]
 
 function App() {
+
+
+
   return (
     <div className="App">
       <PersistentDrawerLeft>
-        <BasicTabs children={children}/>
+        <BasicTabs 
+        children={children}/>
       </PersistentDrawerLeft>
     </div>
   );

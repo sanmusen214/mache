@@ -1,0 +1,6 @@
+.modulebox:hover{
+    border-radius: 17px;
+    background: #ffffff;
+    box-shadow:  5px 5px 10px #e0e0e0,
+                 -5px -5px 10px #ffffff;
+}
