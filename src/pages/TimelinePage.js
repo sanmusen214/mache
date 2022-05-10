@@ -7,8 +7,7 @@ import TimelineContent from '@mui/lab/TimelineContent';
 import TimelineDot from '@mui/lab/TimelineDot';
 import TimelineOppositeContent from '@mui/lab/TimelineOppositeContent';
 import { getTimelineitems } from '../services/timelineitems'
-import { Typography } from '@mui/material';
-
+import { Typography,Button } from '@mui/material';
 
 export default function TimelinePage() {
 
@@ -34,11 +33,11 @@ export default function TimelinePage() {
                 <TimelineDot color={index==0?"primary":"grey"}/>
                 <TimelineConnector />
               </TimelineSeparator>
-              <TimelineContent onClick={()=>{
-                if(each.maininfo.url.findIndex("http")==0){
+              <TimelineContent>{each.name} - {each.maininfo.count}<Button onClick={()=>{
+                each.maininfo.url=each.maininfo.url||""
+                if(each.maininfo.url&&each.maininfo.url.indexOf("http")==0){
                   window.open(each.maininfo.url)
-                }
-              }}>{each.name} - {each.maininfo.count}</TimelineContent>
+                }}}>jump</Button></TimelineContent>
             </TimelineItem>
           )
 

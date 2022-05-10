@@ -78,8 +78,10 @@ const renderrow=(row)=>{
       <TableCell>{row.info.hour}</TableCell>
       <TableCell className='countlabel'>
       <IconButton onClick={()=>{
-        addreminder({...row,count:{nowcount:row.count.nowcount-0-1}})
-        rerender()
+        if(row.count.nowcount-0-1>=0){
+          addreminder({...row,count:{nowcount:row.count.nowcount-0-1}})
+          rerender()
+        }
         }}><ArrowLeftIcon /></IconButton>
         {row.count.nowcount}
       <IconButton onClick={()=>{

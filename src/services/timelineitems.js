@@ -46,14 +46,14 @@ function formatTimelineItems(obj){
             for(let i=0;i<10;i++){
                 TimeDatePoint.setDate(i)
                 if(TimeDatePoint.getDay()==reminder.info.day){
-                    console.log("追溯结束:",TimeDatePoint.getDay(),reminder.info.day)
+                    // console.log("追溯结束:",TimeDatePoint.getDay(),reminder.info.day)
                     break
                 }
             }
-            console.log("追溯前:",TimeDatePoint)
+            // console.log("追溯前:",TimeDatePoint)
             break
     }
-    console.log("reminder: ",reminder,"--date: ",TimeDatePoint)
+    // console.log("reminder: ",reminder,"--date: ",TimeDatePoint)
     // 从去年十二月开始追溯到紧挨着现在的下一个
     while(TimeDatePoint-TimeDateNow<0){
         switch(type){

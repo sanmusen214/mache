@@ -48,7 +48,7 @@ export function getreminder(){
     for(let i=0;i<reslist;i++){
         reslist[i]=formatReminders(reslist[i])
     }
-    console.log(reslist)
+    // console.log(reslist)
     return reslist
 }
 
