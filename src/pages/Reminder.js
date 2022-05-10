@@ -4,7 +4,7 @@ import { IconPlus } from '../components/AddIcon';
 import BasicTablemy from '../components/Tablemy';
 import TableRow from '@mui/material/TableRow';
 import TableCell from '@mui/material/TableCell';
-import { Button, IconButton } from '@mui/material';
+import { Button, IconButton, Typography } from '@mui/material';
 import FormDialogReminder from '../components/ReminderForm';
 import ArrowLeftIcon from '@mui/icons-material/ArrowLeft';
 import ArrowRightIcon from '@mui/icons-material/ArrowRight';
@@ -38,6 +38,11 @@ export default function Reminder() {
 
   const rerender=()=>{
     setreminders(getreminder())
+  }
+
+  const onremove=(e)=>{
+    removereminder(e)
+    rerender()
   }
 
   // 创建新reminder
@@ -87,9 +92,10 @@ const renderrow=(row)=>{
           if(e.target.getAttribute('data-url').indexOf('http')==0){
             window.open(e.target.getAttribute('data-url'))
           }}}>jump</Button>
-        <Button data-key={row.id} onClick={(e)=>{
-          removereminder(e.target.getAttribute('data-key'))
-          rerender()
+        <Button color='error' data-key={row.id} onClick={(e)=>{
+          if(window.confirm("Delete?")){
+            onremove(e.target.getAttribute('data-key'))
+          }
           }}>delete</Button>
         </TableCell>
     </TableRow>
@@ -98,7 +104,10 @@ const renderrow=(row)=>{
 
   return (
     <div>
-      <BasicTablemy headdata={headdata} rowsdata={reminders} render={renderrow}/>
+      
+      {
+        reminders.length==0?<Typography variant='h5'>There is no reminder now</Typography>:<BasicTablemy headdata={headdata} rowsdata={reminders} render={renderrow}/>
+      }
       <IconPlus recall={()=>{setvisible(true)}}/>
       <FormDialogReminder open={visible} setopen={setvisible} finish={onfinish}/>
     </div>

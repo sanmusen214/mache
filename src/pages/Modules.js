@@ -10,6 +10,7 @@ import { IconPlus } from '../components/AddIcon';
 import PropTypes from 'prop-types';
 import FormDialogModule from '../components/ModuleForm';
 import { timerandom } from '../utils/timedate';
+import { Typography } from '@mui/material';
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -59,11 +60,11 @@ export default function Modules() {
   const [showform, setshowform] = useState(false)
 
   useEffect(() => {
-    setmodules(getmodules())
+    reshow()
   }, [])
 
   const remove=(e)=> {
-    removemodules(e.target.getAttribute("data-key"))
+    removemodules(e)
     reshow()
   }
   
@@ -84,6 +85,9 @@ export default function Modules() {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
+      {
+        modules.length==0?<Typography variant='h5'>There is no module now</Typography>:null
+      }
       <Grid container spacing={2}>
         {modules.map((e) => {
           return <Module key={e.id} info={e} remove={remove}/>

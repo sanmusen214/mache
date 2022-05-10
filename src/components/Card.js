@@ -42,7 +42,9 @@ export default function BasicCard(props) {
         style={{float:'right',color:'gray',textDecoration:'underline'}} 
         data-key={id}
         onClick={(e)=>{
-          remove(e)
+          if(window.confirm("Remove?")){
+            remove(e.target.getAttribute('data-key'))
+          }
           e.stopPropagation()
         }}>remove</a>
       </CardContent>
