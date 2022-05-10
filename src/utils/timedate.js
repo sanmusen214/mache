@@ -1,8 +1,29 @@
+
 /**
  * 返回依据于时间的随机数
  */
 export function timerandom(){
     return new Date().getSeconds()
+}
+
+/**
+ * 获取某年的几月有几天,月份从1开始
+ */
+export function daysinMon(year,month){
+    month=month-0
+    month=month+1
+    if(month==13){
+        month=1
+    }
+    if(month<10){
+        month='0'+month
+    }else{
+        month=month+''
+    }
+    const marchmonth=new Date(year+"-"+month+"-01")
+    const febmonth=new Date(marchmonth.setDate(0))
+    // console.log(febmonth.toString())
+    return febmonth.getDate()
 }
 
 /**

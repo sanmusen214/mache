@@ -59,3 +59,13 @@ export function addreminder(item){
 export function removereminder(itemid){
     return removeItem(keyname,itemid)
 }
+
+/**
+ * 由reminder对象转Date，年份默认为今年
+ */
+ export function RemindertoDate(reminder,year=new Date().getFullYear()){
+    reminder=formatReminders(reminder)
+    const dd= new Date(year,reminder.info.month,reminder.info.day,reminder.info.hour)
+    console.log(dd)
+    return dd
+}

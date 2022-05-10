@@ -12,6 +12,8 @@ import PropTypes from 'prop-types';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import InputLabel from '@mui/material/InputLabel';
+import { daysinMon } from '../utils/timedate';
+
 
 const weekdaymap = { '0': 'Monday', '1': 'Tuesday', '2': 'Wednesday', '3': 'Thursday', '4': 'Friday', '5': 'Saturday', '6': 'Sunday' }
 
@@ -37,15 +39,9 @@ function loopntimes(n, offset = 0) {
 /**
  * 计算月份的天数，传入0开始的月份,返回对应的天数列表,[1~31]
  */
-function getNmonthDay(month) {
+function getNmonthDay(month,year=new Date().getFullYear()) {
     month = month - 0 + 1 + ''
-    if (month == '2') {
-        return loopntimes(29, 1)
-    }
-    if (['1', '3', '5', '7', '8', '10', '12'].includes(month)) {
-        return loopntimes(31, 1)
-    }
-    return loopntimes(30, 1)
+    return loopntimes(daysinMon(year,month), 1)
 }
 
 /**
