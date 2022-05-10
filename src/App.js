@@ -25,8 +25,6 @@ const children=[
 
 function App() {
 
-
-
   return (
     <div className="App">
       <PersistentDrawerLeft>

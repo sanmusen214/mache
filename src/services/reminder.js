@@ -1,3 +1,5 @@
+import {addItem,getItem,removeItem} from '../utils/localstorage'
+
 const keyname='reminder'
 
 // id
@@ -7,7 +9,7 @@ const keyname='reminder'
 // 每月：name url day hour
 // 每周：name url day hour
 // count如下(从创建开始过后经过了多少次)：
-// needcount(bool) maxcount nowcount createTimeStr
+// nowcount
 
 /**
  * @param obj.id
@@ -36,32 +38,24 @@ function formatReminders(obj){
             hour:obj.info.hour||"1"
         },
         count:{
-            needcount:obj.count.needcount||false,
-            maxcount:obj.count.maxcount||500,
             nowcount:obj.count.nowcount||0,
-            createTimeStr:obj.count.createTimeStr||"Tue, 10 May 2022 06:40:17 GMT"
         }
     }
 }
 
 export function getreminder(){
-    return [
-        {
-            id:'id123',
-            mode:"year",
-            info:{
-                name:"test reminder",
-                url:"#",
-                month:"2",
-                day:"3",
-                hour:"12"
-            },
-            count:{
-                needcount:true,
-                maxcount:500,
-                nowcount:3,
-                createTimeStr:"Tue, 10 May 2022 06:40:17 GMT"
-            }
-        }
-    ]
+    const reslist=getItem(keyname)
+    for(let i=0;i<reslist;i++){
+        reslist[i]=formatReminders(reslist[i])
+    }
+    return reslist
+}
+
+export function addreminder(item){
+    const newitem=formatReminders(item)
+    addItem(keyname,newitem.id,newitem)
+}
+
+export function removereminder(itemid){
+    return removeItem(keyname,itemid)
 }

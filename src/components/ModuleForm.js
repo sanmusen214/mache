@@ -36,8 +36,10 @@ export default function FormDialogModule(props) {
     const [info,setinfo]=React.useState(defaultinfo)
 
     const handleSubmit = () => {
-        finish(info);
-        setopen(false);
+        if(info.name){
+            finish(info);
+            setopen(false);
+        }
     }
 
     const handleClose = () => {
@@ -51,8 +53,9 @@ export default function FormDialogModule(props) {
                 <DialogContent>
                     <Box
                     component="form"
+                    fullwidth
                     sx={{
-                      '& .MuiTextField-root': { m: 1, width: '25ch' },
+                      '& .MuiTextField-root': { m: 1, width: '60ch' },
                     }}
                     noValidate
                     autoComplete="off"
@@ -64,7 +67,6 @@ export default function FormDialogModule(props) {
                             label="Name"
                             fullWidth
                             variant="standard"
-                            value={info.name}
                             onChange={(e)=>{setinfo({...info,name:e.target.value})}}
                         />
                         <br />
@@ -75,7 +77,6 @@ export default function FormDialogModule(props) {
                             label="Description"
                             fullWidth
                             variant="standard"
-                            value={info.des}
                             onChange={(e)=>{setinfo({...info,des:e.target.value})}}
                         />
                         <br />
@@ -86,7 +87,6 @@ export default function FormDialogModule(props) {
                             fullWidth
                             variant="standard"
                             placeholder='https://'
-                            value={info.url}
                             onChange={(e)=>{setinfo({...info,url:e.target.value})}}
                         />
                     </Box>

@@ -32,7 +32,7 @@ export function Module(props) {
       item
       xs={4}
       sx={{ cursor: 'default', userSelect: 'none' }}
-      onClick={() => { if (info.link != "#" && info.link) { window.open(info.link) } }}>
+      onClick={() => { if (info.link && info.link.indexOf('http')==0) { window.open(info.link) } }}>
       <div className="modulebox">
         <BasicCard
           id={info.id}
@@ -51,7 +51,7 @@ Module.propTypes = {
 
 
 /**
- * TODO: 回显
+ * 
  */
 export default function Modules() {
 
