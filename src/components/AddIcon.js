@@ -8,7 +8,7 @@ export function IconPlus(props) {
     const recall=props.recall||function(e){return e};
     return (
         <Fab 
-        sx={{position:'absolute',right:40,bottom:60}}
+        sx={{position:'fixed',right:40,bottom:60}}
         onClick={recall}
         color="primary" aria-label="add">
         <AddIcon />

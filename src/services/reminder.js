@@ -17,7 +17,7 @@ const keyname='reminder'
  * @param obj.info:
  * @param obj.count
  */
-function formatReminders(obj){
+export function formatReminders(obj){
     if(!obj.id){
         throw Error("must have an id")
     }
@@ -48,6 +48,7 @@ export function getreminder(){
     for(let i=0;i<reslist;i++){
         reslist[i]=formatReminders(reslist[i])
     }
+    console.log(reslist)
     return reslist
 }
 
@@ -66,6 +67,6 @@ export function removereminder(itemid){
  export function RemindertoDate(reminder,year=new Date().getFullYear()){
     reminder=formatReminders(reminder)
     const dd= new Date(year,reminder.info.month,reminder.info.day,reminder.info.hour)
-    console.log(dd)
+    // console.log(dd)
     return dd
 }

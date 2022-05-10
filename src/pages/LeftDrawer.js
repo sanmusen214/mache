@@ -67,6 +67,21 @@ const DrawerHeader = styled('div')(({ theme }) => ({
   justifyContent: 'flex-end',
 }));
 
+const Eachlink=(props)=>{
+  const each=props.data
+  return (
+    <ListItem 
+    button key={each.name}
+    onClick={()=>{each.link&&window.open(each.link)}}
+    >
+      <ListItemIcon>
+        <img src={each.picurl} width={30} />
+      </ListItemIcon>
+      <ListItemText primary={each.name} />
+    </ListItem>
+  )
+}
+
 export default function PersistentDrawerLeft(props) {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
@@ -119,30 +134,24 @@ export default function PersistentDrawerLeft(props) {
         <Divider />
         <List>
           {getdrawer()['online'].map((each, index) => (
-            <ListItem 
-            button key={each.name}
-            onClick={()=>{each.link&&window.open(each.link)}}
-            >
-              <ListItemIcon>
-                <img src={each.picurl} width={30} />
-              </ListItemIcon>
-              <ListItemText primary={each.name} />
-            </ListItem>
+            <Eachlink data={each} key={index} />
           ))}
         </List>
         <Divider />
+
         <List>
           {getdrawer()['onsite'].map((each, index) => (
-            <ListItem button 
-            onClick={()=>{each.link&&window.open(each.link)}}
-            key={each.name}>
-              <ListItemIcon>
-                <img src={each.picurl} width={30} />
-              </ListItemIcon>
-              <ListItemText primary={each.name} />
-            </ListItem>
+            <Eachlink data={each} key={index} />
           ))}
         </List>
+        <Divider />
+
+        <List>
+          {getdrawer()['about'].map((each, index) => (
+            <Eachlink data={each} key={index} />
+          ))}
+        </List>
+        <Divider />
       </Drawer>
       <Main open={open}>
         <DrawerHeader />

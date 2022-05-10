@@ -34,7 +34,7 @@ export function StringtoDate(str){
     return {
         month:res.getMonth(),//0~11
         date:res.getDate(),//1~31
-        day:res.getDay(),//0~6
+        day:res.getDay(),//0~6 0是周日
         hour:res.getHours(),//0~23
     }
 }
@@ -45,3 +45,11 @@ export function StringtoDate(str){
 export function DatetoString(date){
     return date.toUTCString()
 }
+
+/**
+ * date对象转显示的字符串
+ */
+export function showTime(date){
+    return date.getFullYear()+"-"+((date.getMonth()+1)>9?date.getMonth()+1:"0"+(date.getMonth()+1))+"-"+(date.getDate()>9?date.getDate():"0"+date.getDate())+" "+(date.getHours()>9?date.getHours():"0"+date.getHours())+":"+(date.getMinutes()>9?date.getMinutes():"0"+date.getMinutes());
+}
+
