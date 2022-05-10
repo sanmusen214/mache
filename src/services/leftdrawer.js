@@ -32,10 +32,11 @@ const onsite=[
 ]
 const about=[
     {
-        name:'About',
-        link:''
+        name:'About Mache',
+        link:'https://github.com/sanmusen214/mache',
+        picurl:'https://github.githubassets.com/favicons/favicon.png'
     }
 ]
 export function getdrawer(){
-    return {'online':online,'onsite':onsite}
+    return {'online':online,'onsite':onsite,'about':about}
 }
