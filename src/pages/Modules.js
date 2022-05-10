@@ -3,12 +3,13 @@ import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
-import { getmodules } from '../services/modules';
+import { getmodules,addmodules,removemodules } from '../services/modules';
 import BasicCard from '../components/Card';
 import "./Modules.css"
 import { IconPlus } from '../components/AddIcon';
 import PropTypes from 'prop-types';
-import FormDialog from '../components/PopupForm';
+import FormDialogModule from '../components/ModuleForm';
+import { timerandom } from '../utils/timedate';
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -21,9 +22,11 @@ const Item = styled(Paper)(({ theme }) => ({
 /**
  * 单个模块
  * @param props.info
+ * @param props.remove
  */
 export function Module(props) {
   const info = props.info || {}
+  const remove=props.remove||function(e){return e}
   return (
     <Grid
       item
@@ -46,17 +49,9 @@ Module.propTypes = {
   info: PropTypes.object.isRequired
 }
 
-function remove(e) {
-  console.log(e.target.getAttribute("data-key"))
-}
 
-function submit(e) {
-  //处理传回来的各种表单提交
-  console.log("submit!")
-  return e
-}
 /**
- * TODO: 传入表单，返回填写内容
+ * TODO: 回显
  */
 export default function Modules() {
 
@@ -67,19 +62,40 @@ export default function Modules() {
     setmodules(getmodules())
   }, [])
 
+  const remove=(e)=> {
+    removemodules(e.target.getAttribute("data-key"))
+    reshow()
+  }
+  
+  const submit=(e)=>{
+    //处理传回来的各种表单提交
+    addmodules({
+      id:e.name+timerandom(),
+      name:e.name,
+      link:e.url,
+      describe:e.des
+    })
+    reshow()
+  }
+
+  const reshow=()=>{
+    setmodules(getmodules())
+  }
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <Grid container spacing={2}>
         {modules.map((e) => {
-          return <Module key={e.id} info={e} />
+          return <Module key={e.id} info={e} remove={remove}/>
         })}
       </Grid>
       <IconPlus recall={() => {
-        console.log(showform)
         setshowform(true)
-        console.log(showform)
       }} />
-      <FormDialog open={showform} setOpen={setshowform} finish={submit} />
+      <FormDialogModule 
+      open={showform} 
+      setopen={setshowform} 
+      finish={submit} />
     </Box>
   )
 }

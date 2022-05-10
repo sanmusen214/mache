@@ -1,5 +1,8 @@
+import {addItem,getItem,removeItem} from '../utils/localstorage'
+
+const keyname='module'
 /**
- * id,name,link,describe
+ * 'module':{id,name,link,describe}
  */
 function formatModules(obj){
     if(!obj.id){
@@ -13,38 +16,25 @@ function formatModules(obj){
     }
 }
 
-
+/**
+ * {id,name,link,describe}
+ */
 export function getmodules(){
-    return [
-        {
-            id:"CPT2040526",
-            name:"CPT204",
-            link:'https://www.learningmall.cn/course/view.php?id=3444',
-            describe:"This is a schoole module,This is a schoole moduleThis is a schoole moduleThis is a schoole moduleThis is a schoole moduleThis is a schoole moduleThis is a schoole module"
-        },
-        {
-            id:"CPT2080526",
-            name:"CPT208",
-            link:"#",
-            describe:"This is about design"
-        },
-        {
-            id:"CPT2080527",
-            name:"CPT208",
-            link:"#",
-            describe:"This is about design"
-        },
-        {
-            id:"CPT20805289",
-            name:"CPT208",
-            link:"#",
-            describe:"This is about design"
-        },
-        {
-            id:"CPT20805299",
-            name:"CPT208",
-            link:"#",
-            describe:"This is about design"
-        }
-    ]
+    const resultlist= getItem(keyname)
+    for (let i=0;i<resultlist.length;i++){
+        resultlist[i]=formatModules(resultlist[i])
+    }
+    return resultlist
+}
+
+/**
+ * target:{id,name,link,describe}
+ */
+export function addmodules(target){
+    const newmodule=formatModules(target)
+    return addItem(keyname,target.id,target)
+}
+
+export function removemodules(itemid){
+    return removeItem(keyname,itemid)
 }

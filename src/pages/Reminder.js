@@ -1,32 +1,42 @@
 // 带有时间记录的备忘录
 import React from 'react'
 import { IconPlus } from '../components/AddIcon';
+import { getreminder } from '../services/reminder';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
 
-import { addItem,getItem,removeItem } from '../utils/localstorage';
 export default function Reminder() {
   return (
     <div>
-      <div onClick={()=>{
-        addItem('test','test1',{id:'test1',text:'I am a test',world:'hello world'})
-      }}>add test1 to test</div>
-      <div onClick={()=>{
-        addItem('test','test2',{id:'test2',text:'I am a test2',world:'hello world2'})
-      }}>add test2 to test</div>
-      <div
-      onClick={()=>{
-        console.log(getItem('test'))
-      }}
-      >show test</div>
-      <div onClick={()=>{
-        removeItem('test','test1')
-      }}>
-        delete test1
-      </div>
-      <div onClick={()=>{
-        removeItem('test','test2')
-      }}>
-        delete test2
-      </div>
+      <TableContainer component={Paper}>
+        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+          <TableHead>
+            <TableRow>
+              <TableCell>Dessert (100g serving)</TableCell>
+              <TableCell align="right">Calories</TableCell>
+              <TableCell align="right">Fat&nbsp;(g)</TableCell>
+              <TableCell align="right">Carbs&nbsp;(g)</TableCell>
+              <TableCell align="right">Protein&nbsp;(g)</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {rows.map((row) => (
+              <TableRow
+                key={row.name}
+                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+              >
+                <TableCell component="th" scope="row">
+                  {row.name}
+                </TableCell>
+                <TableCell align="right">{row.calories}</TableCell>
+                <TableCell align="right">{row.fat}</TableCell>
+                <TableCell align="right">{row.carbs}</TableCell>
+                <TableCell align="right">{row.protein}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
       <IconPlus />
     </div>
   )

@@ -30,7 +30,12 @@ const onsite=[
         picurl:'https://lib.xjtlu.edu.cn/sites/default/files/favicon-32x32.png'
     }
 ]
-
+const about=[
+    {
+        name:'About',
+        link:''
+    }
+]
 export function getdrawer(){
     return {'online':online,'onsite':onsite}
 }
