@@ -54,7 +54,7 @@ function getNmonthDay(month,year=new Date().getFullYear()) {
         hour:0~23
  */
 export default function FormDialogReminder(props) {
-    const infomat = { mode: "week", name: "", url: "", month: "1", day: "1", hour: "0" }
+    const infomat = { mode: "week", name: "", url: "", month: "0", day: "1", hour: "0" }
     // 规范入参
     const finish = props.finish || function (e) { return e }
     const open = props.open || false
@@ -103,7 +103,7 @@ export default function FormDialogReminder(props) {
                         <Select
                             id="demo-simple-select"
                             value={info.mode}
-                            onChange={(e) => { setinfo({ ...info, mode: e.target.value,month:'1',day:'1' }) }}
+                            onChange={(e) => { setinfo({ ...info, mode: e.target.value,month:'0',day:'1' }) }}
                         >
                             <MenuItem value={'year'}>Each year</MenuItem>
                             <MenuItem value={'month'}>Each month</MenuItem>

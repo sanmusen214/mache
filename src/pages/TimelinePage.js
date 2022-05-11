@@ -11,37 +11,41 @@ import { Typography,Button } from '@mui/material';
 
 export default function TimelinePage() {
 
-  const [lineitems, setlineitems] = React.useState([])
+  const [lineitems, setlineitems] = React.useState({
+    'before':[],
+    'after':[]
+  })
 
   React.useEffect(() => {
-    const aal = getTimelineitems()
-    // console.log(aal)
-    setlineitems(aal)
+    setlineitems(getTimelineitems())
   }, [])
+
+  // 渲染timeline到节点上
+  const showline=(each,index,highlight=false) => {
+    return (
+      <TimelineItem key={each.name+each.datestr}>
+        <TimelineOppositeContent color="text.secondary">
+          {each.showstr}
+        </TimelineOppositeContent>
+        <TimelineSeparator>
+          <TimelineDot color={index==0&&highlight?"primary":"grey"}/>
+          <TimelineConnector />
+        </TimelineSeparator>
+        <TimelineContent>{each.name} - {each.maininfo.count}<Button onClick={()=>{
+          each.maininfo.url=each.maininfo.url||""
+          if(each.maininfo.url&&each.maininfo.url.indexOf("http")==0){
+            window.open(each.maininfo.url)
+          }}}>jump</Button></TimelineContent>
+      </TimelineItem>
+    )
+  }
 
   return (
     <React.Fragment>
-      {lineitems.length==0?<Typography variant='h5'>There is no reminder now</Typography>:null}
       <Timeline>
-        {lineitems.map((each,index) => {
-          return (
-            <TimelineItem key={each.name+each.datestr}>
-              <TimelineOppositeContent color="text.secondary">
-                {each.showstr}
-              </TimelineOppositeContent>
-              <TimelineSeparator>
-                <TimelineDot color={index==0?"primary":"grey"}/>
-                <TimelineConnector />
-              </TimelineSeparator>
-              <TimelineContent>{each.name} - {each.maininfo.count}<Button onClick={()=>{
-                each.maininfo.url=each.maininfo.url||""
-                if(each.maininfo.url&&each.maininfo.url.indexOf("http")==0){
-                  window.open(each.maininfo.url)
-                }}}>jump</Button></TimelineContent>
-            </TimelineItem>
-          )
-
-        })}
+        {lineitems['before'].map((e,i)=>showline(e,i,false))}
+        {/* after包含现在，需要高亮第一个 */}
+        {lineitems['after'].map((e,i)=>{return showline(e,i,true)})}
       </Timeline>
     </React.Fragment>
   );

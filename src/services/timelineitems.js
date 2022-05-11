@@ -62,6 +62,8 @@ function formatTimelineItems(obj){
                 break
             case "month":
                 TimeDatePoint.setMonth(TimeDatePoint.getMonth()+1)
+                // 更新月份后再次确保日期正确
+                TimeDatePoint.setDate(reminder.info.day)
                 break
             case "week":
                 TimeDatePoint.setDate(TimeDatePoint.getDate()+7)
@@ -82,6 +84,8 @@ export function getTimelineitems(){
             count:0
         }
     })]
+    // 当前时间点往前,只包含周循环
+    const bllist=[]
     // 建立每年/每月/每周三个优先队列
     const eachyear=[]
     const eachmonth=[]
@@ -124,6 +128,23 @@ export function getTimelineitems(){
                 count:em.count.nowcount
             }
         }))
+        // 月份往前，注意日期缩小（对于30号，这个月31天，上个月只有30天
+        const lastdatepoint=new Date(nextdatepoint)
+        // 先设为0日，跳到上个月最后一天后判断目标日期是否越界lastdatepoint月总天数，否则继续跳
+        lastdatepoint.setDate(0)
+        while(lastdatepoint.getDate()<em.info.day){
+            lastdatepoint.setDate(0)
+        }
+        lastdatepoint.setDate(em.info.day)
+        bllist.push(formatTimelineItems({
+            name:em.info.name,
+            datestr:lastdatepoint.toString(),
+            showstr:showTime(lastdatepoint),
+            maininfo:{
+                url:em.info.url,
+                count:em.count.nowcount
+            }
+        }))
     }
     for (let ew of eachweek){
         const nextdatepoint=findNextPointAfter(ew)
@@ -136,12 +157,36 @@ export function getTimelineitems(){
                 count:ew.count.nowcount
             }
         }))
+        // 往前
+        const lastdatepoint=new Date(nextdatepoint)
+        lastdatepoint.setDate(lastdatepoint.getDate()-7)
+        bllist.push(formatTimelineItems({
+            name:ew.info.name,
+            datestr:lastdatepoint.toString(),
+            showstr:showTime(lastdatepoint),
+            maininfo:{
+                url:ew.info.url,
+                count:ew.count.nowcount
+            }
+        }))
     }
     // 把tllist排序
     tllist.sort((a,b)=>{
-        const timea=new Date(a.datestr)
-        const timeb=new Date(b.datestr)
-        return timea-timeb
+        let timea=new Date(a.datestr)
+        let timeb=new Date(b.datestr)
+        const diff=timea-timeb
+        timea=null
+        timeb=null
+        return diff
     })
-    return tllist
+    // 把bllist排序
+    bllist.sort((a,b)=>{
+        let timea=new Date(a.datestr)
+        let timeb=new Date(b.datestr)
+        const diff=timea-timeb
+        timea=null
+        timeb=null
+        return diff
+    })
+    return {'before':bllist,'after':tllist}
 }
