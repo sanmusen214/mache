@@ -1,5 +1,6 @@
 import {getreminder,RemindertoDate,formatReminders} from './reminder'
 import {showTime} from '../utils/timedate'
+import { Construction } from '@mui/icons-material'
 /**
  */
 function formatTimelineItems(obj){
@@ -21,55 +22,46 @@ function formatTimelineItems(obj){
  */
  export function findNextPointAfter(reminder){
     const type=reminder.mode
-    const TimeDateNow=new Date()
-    let TimeDatePoint=new Date()
+    const TimeDatePoint=new Date()
     TimeDatePoint.setMinutes(0)
     TimeDatePoint.setHours(reminder.info.hour)
-    //先变成尽可能往前的符合条件的月日
+    //从今天开始往后追溯
     switch(type){
         case "year":
-            // 去年同月同日
-            TimeDatePoint.setFullYear(TimeDatePoint.getFullYear()-1)
-            TimeDatePoint.setMonth(reminder.info.month)
-            TimeDatePoint.setDate(reminder.info.day)
-            break
-        case "month":
-            // 去年十二月同日
-            TimeDatePoint.setFullYear(TimeDatePoint.getFullYear()-1)
-            TimeDatePoint.setMonth(11)
-            TimeDatePoint.setDate(reminder.info.day)
-            break
-        case "week":
-            // 去年十二月同星期
-            TimeDatePoint.setFullYear(TimeDatePoint.getFullYear()-1)
-            TimeDatePoint.setMonth(11)
-            for(let i=0;i<10;i++){
-                TimeDatePoint.setDate(i)
-                if(TimeDatePoint.getDay()==reminder.info.day){
-                    // console.log("追溯结束:",TimeDatePoint.getDay(),reminder.info.day)
+            if(TimeDatePoint.getMonth()==reminder.info.month&&TimeDatePoint.getDate()==reminder.info.day){
+                break
+            }
+            for(let i=0;i<366;i++){
+                TimeDatePoint.setDate(TimeDatePoint.getDate()+1)
+                if(TimeDatePoint.getMonth()==reminder.info.month&&TimeDatePoint.getDate()==reminder.info.day){
                     break
                 }
             }
-            // console.log("追溯前:",TimeDatePoint)
+            break
+        case "month":
+            if(TimeDatePoint.getDate()==reminder.info.day){
+                break
+            }
+            for(let i=0;i<366;i++){
+                TimeDatePoint.setDate(TimeDatePoint.getDate()+1)
+                if(TimeDatePoint.getDate()==reminder.info.day){
+                    break
+                }
+            }
+            break
+        case "week":
+            if(TimeDatePoint.getDay()==reminder.info.day){
+                break
+            }
+            for(let i=0;i<366;i++){
+                TimeDatePoint.setDate(TimeDatePoint.getDate()+1)
+                if(TimeDatePoint.getDay()==reminder.info.day){
+                    break
+                }
+            }
             break
     }
     // console.log("reminder: ",reminder,"--date: ",TimeDatePoint)
-    // 从去年十二月开始追溯到紧挨着现在的下一个
-    while(TimeDatePoint-TimeDateNow<0){
-        switch(type){
-            case "year":
-                TimeDatePoint.setFullYear(TimeDatePoint.getFullYear()+1)
-                break
-            case "month":
-                TimeDatePoint.setMonth(TimeDatePoint.getMonth()+1)
-                // 更新月份后再次确保日期正确
-                TimeDatePoint.setDate(reminder.info.day)
-                break
-            case "week":
-                TimeDatePoint.setDate(TimeDatePoint.getDate()+7)
-                break
-        }
-    }
     return TimeDatePoint
 }
 
