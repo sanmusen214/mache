@@ -51,13 +51,28 @@ export function addItem(key, itemid, newitem) {
 /**
  * 查询key,返回列表,[{},{}]
  */
-export function getItem(key) {
+export function getItems(key) {
     const itemobj = qs.parse(localStorage.getItem(key))
     if (itemobj['content']) {
         return itemobj['content']
     }else{
         return []
     }
+}
+
+/**
+ * 导出localstorage存储的数据
+ */
+export function loadItems(key){
+    return localStorage.getItem(key)
+}
+
+/**
+ * 导入localstorage存储的数据
+ */
+export function saveItems(key,value){
+    // console.log("-----",key,value,qs.parse(value))
+    localStorage.setItem(key,value)
 }
 
 /**

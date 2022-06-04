@@ -19,6 +19,8 @@ import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
 import { getdrawer } from '../services/leftdrawer';
 import { Link } from '@mui/material';
+import SaveloadForm from '../components/SaveloadForm';
+
 
 const drawerWidth = 240;
 
@@ -72,7 +74,7 @@ const Eachlink=(props)=>{
   return (
     <ListItem 
     button key={each.name}
-    onClick={()=>{each.link&&window.open(each.link)}}
+    onClick={()=>{(props.onClick&&props.onClick())||each.link&&window.open(each.link)}}
     >
       <ListItemIcon>
         <img src={each.picurl} width={30} />
@@ -85,6 +87,7 @@ const Eachlink=(props)=>{
 export default function PersistentDrawerLeft(props) {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
+  const [saveopen,setsaveopen]=React.useState(false);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -144,7 +147,12 @@ export default function PersistentDrawerLeft(props) {
             <Eachlink data={each} key={index} />
           ))}
         </List>
+
         <Divider />
+
+        <List>
+          <Eachlink onClick={()=>{setsaveopen(true)}} data={{name:"load/save"}} key="savesopy" />
+        </List>
 
         <List>
           {getdrawer()['about'].map((each, index) => (
@@ -153,6 +161,7 @@ export default function PersistentDrawerLeft(props) {
         </List>
         <Divider />
       </Drawer>
+      {saveopen?<SaveloadForm open={saveopen} setopen={setsaveopen} />:null}
       <Main open={open}>
         <DrawerHeader />
         {props.children}

@@ -1,4 +1,4 @@
-import {addItem,getItem,removeItem} from '../utils/localstorage'
+import {addItem,getItems,removeItem} from '../utils/localstorage'
 
 const keyname='module'
 /**
@@ -20,7 +20,7 @@ function formatModules(obj){
  * {id,name,link,describe}
  */
 export function getmodules(){
-    const resultlist= getItem(keyname)
+    const resultlist= getItems(keyname)
     for (let i=0;i<resultlist.length;i++){
         resultlist[i]=formatModules(resultlist[i])
     }

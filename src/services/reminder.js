@@ -1,4 +1,4 @@
-import {addItem,getItem,removeItem} from '../utils/localstorage'
+import {addItem,getItems,removeItem} from '../utils/localstorage'
 
 const keyname='reminder'
 
@@ -44,7 +44,7 @@ export function formatReminders(obj){
 }
 
 export function getreminder(){
-    const reslist=getItem(keyname)
+    const reslist=getItems(keyname)
     for(let i=0;i<reslist;i++){
         reslist[i]=formatReminders(reslist[i])
     }

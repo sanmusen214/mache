@@ -1,4 +1,4 @@
-// Modules的表单
+// 提取、导入所有info
 import * as React from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
@@ -8,35 +8,33 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import { Box } from '@mui/system';
 import PropTypes from 'prop-types';
+import {saveAll,loadAll} from '../services/saveload'
 
 
-
-FormDialogModule.propTypes={
-    finish:PropTypes.func.isRequired,
+SaveloadForm.propTypes={
     open:PropTypes.bool.isRequired,
     setopen:PropTypes.func.isRequired,
-    defaultinfo:PropTypes.object
 }
 
 /**
- * @param props.finish
  * @param props.open
  * @param props.setopen
- * @param props.defaultinfo {name:'',des:'',url:''}
  */
-export default function FormDialogModule(props) {
-    const infomat={name:'',des:'',url:''}
+export default function SaveloadForm(props) {
     // 规范入参
-    const finish = props.finish || function (e) { return e }
-    const open=props.open||false
-    const setopen=props.setopen||function(e){return e}
-    const defaultinfo=props.defaultinfo||infomat
+    const open=props.open
+    const setopen=props.setopen
+
     // 变量
-    const [info,setinfo]=React.useState(defaultinfo)
+    const [info,setinfo]=React.useState()
+
+    React.useEffect(()=>{
+        setinfo(loadAll())
+    },[])
 
     const handleSubmit = () => {
-        if(info.name){
-            finish(info);
+        if(info){
+            saveAll(info);
             setopen(false);
         }
     }
@@ -48,7 +46,7 @@ export default function FormDialogModule(props) {
     return (
         <div>
             <Dialog open={open} onClose={handleClose}>
-                <DialogTitle>Modules</DialogTitle>
+                <DialogTitle>Save/Load</DialogTitle>
                 <DialogContent>
                     <Box
                     component="form"
@@ -60,33 +58,16 @@ export default function FormDialogModule(props) {
                     autoComplete="off"
                     >
                         <TextField
+                            rows={10}
+                            multiline
                             autoFocus
                             margin="dense"
                             id="name"
                             label="Name"
                             fullWidth
                             variant="standard"
-                            onChange={(e)=>{setinfo({...info,name:e.target.value})}}
-                        />
-                        <br />
-                        <TextField
-                            multiline
-                            margin="dense"
-                            id="des"
-                            label="Description"
-                            fullWidth
-                            variant="standard"
-                            onChange={(e)=>{setinfo({...info,des:e.target.value})}}
-                        />
-                        <br />
-                        <TextField
-                            margin="dense"
-                            id="url"
-                            label="Url"
-                            fullWidth
-                            variant="standard"
-                            placeholder='https://'
-                            onChange={(e)=>{setinfo({...info,url:e.target.value})}}
+                            value={info}
+                            onChange={(e)=>{setinfo(e.target.value)}}
                         />
                     </Box>
                     
