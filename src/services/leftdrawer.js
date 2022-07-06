@@ -9,8 +9,8 @@ const online=[
     },
     {
         name:'LearningMall',
-        link:'https://www.learningmall.cn/my/',
-        picurl:'https://www.learningmall.cn/theme/image.php/space/theme/1649773451/favicon'
+        link:'https://core.xjtlu.edu.cn/my/',
+        picurl:'https://core.xjtlu.edu.cn/theme/image.php/space/theme/1657087804/favicon'
     },
     {
         name:'Ebridge',
